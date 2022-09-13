@@ -100,7 +100,8 @@ then
     echo
     echo "6. Voici votre clé publique :"
     echo
-    echo "-> copier TOUTE la ligne commençant par ssh-ed25519..."
+    echo "-> copier TOUTE la ligne"
+    echo "   commençant par ssh-ed25519.. et se terminant par $email"
     echo
     echo "-> puis coller la dans l'interface GitHub"
     echo "   GitHub > Settings > SSH & GPG Keys > New SSH key"
