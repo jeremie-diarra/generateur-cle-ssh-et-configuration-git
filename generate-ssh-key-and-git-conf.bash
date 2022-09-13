@@ -19,6 +19,23 @@ echo "Bienvenue sur ce script de configuration de Git & GitHub <3"
 echo
 echo "Pour générer la clé SSH, tu as besoin de ton pseudo et email Github."
 
+# Clé existante
+if [ -f ~/.ssh/id_ed25519.pub ]
+then
+    echo
+    echo "Attention : une clé SSH existe déjà !!!"
+    echo "si vous continuez, vous écraserez la clé existante"
+    echo
+    read -p "Souhaitez-vous continuer ? (y/n) : " confirm
+    if [ "$confirm" != "y" ]
+    then
+        echo
+        echo "La nouvelle clé n'a pas été générée."
+        echo "Bye."
+        exit 0;
+    fi
+fi
+
 # Récupération pseudo Github
 pseudo=""
 while [ -z $pseudo ]
@@ -56,6 +73,7 @@ if [ "$confirm" != "y" ]
 then
     echo
     echo "La clé n'a pas pu être générée. Veuillez relancer le script pour réessayer."
+    echo "Bye."
     exit 0;
 else
     # Git config
