@@ -24,7 +24,7 @@ pseudo=""
 while [ -z $pseudo ]
 do 
     echo
-    read -p "  1. Quel est ton pseudo sur GitHub : " pseudo
+    read -p "1. Quel est ton pseudo sur GitHub : " pseudo
     if [ -z  "$pseudo" ]
     then
         echo
@@ -37,7 +37,7 @@ email=""
 while [ -z $email ]
 do 
     echo
-    read -p "  2. Quel est l'email que tu as renseigné dans ton compte GitHub : " email
+    read -p "2. Quel est l'email que tu as renseigné dans ton compte GitHub : " email
     if [ -z "$email" ]
     then
         echo
@@ -47,21 +47,20 @@ done
 
 # Vérification des informations saisies
 echo
-echo "    Pseudo : $pseudo"
-echo "    Email : $email"
-
+echo "Pseudo : $pseudo"
+echo "Email : $email"
 echo
-read -p "  3. Ces informations sont-elles exactes ? (y/n) : " confirm
+read -p "3. Ces informations sont-elles exactes ? (y/n) : " confirm
 
 if [ "$confirm" != "y" ]
 then
     echo
-    echo "    La clé n'a pas pu être générée. Veuillez relancer le script pour réessayer."
+    echo "La clé n'a pas pu être générée. Veuillez relancer le script pour réessayer."
     exit 0;
 else
     # Git config
     echo
-    echo "  4. Paramétrage Git"
+    echo "4. Paramétrage Git"
     echo
     git config --global user.name "$pseudo"
     git config --global user.email "$email"
@@ -71,7 +70,7 @@ else
 
     # Création de la clé SSH
     echo
-    echo "  5. Génération de la clé SSH"
+    echo "5. Génération de la clé SSH"
     echo
     ssh-keygen -t ed25519 -N '' -C "$email" -f ~/.ssh/id_ed25519 <<< y
 fi
@@ -79,12 +78,20 @@ fi
 # Vérification que le fichier contenant la clé existe bien
 if [ -f ~/.ssh/id_ed25519.pub ]
 then
-    echo 
-    echo " 6. Voici votre clé publique :" echo echo " -> copier TOUTE la ligne commençant par ssh-ed25519..."
     echo
-    echo "    -> coller la dans l'interface GitHub (Settings > SSH & GPG Keys > New SSH key, dans le champ \"Key\")"
+    echo
+    echo "6. Voici votre clé publique :"
+    echo
+    echo "-> copier TOUTE la ligne commençant par ssh-ed25519..."
+    echo
+    echo "-> puis coller la dans l'interface GitHub"
+    echo "   GitHub > Settings > SSH & GPG Keys > New SSH key"
+    echo "   Title : teleporteur_oclock"
+    echo "   Key   : la clé ci-dessous, commençant par ssh-ed25519..."
     echo 
     echo "=========================="
+    echo
     cat ~/.ssh/id_ed25519.pub
-    echo "=========================="
+    echo
+    echo
 fi
